@@ -1,8 +1,9 @@
 """
 Gap Finder Agent — Auxiliary Agent
 ====================================
-Purpose: Identifies missing or incomplete data in profiles, offers, and empathy
-maps that would improve matching quality. Runs independently from the main pipeline.
+Purpose: Identifies missing or incomplete data in profiles, offers, empathy
+maps, and contacts that would improve matching quality. Runs independently
+from the main pipeline.
 
 Model strategy: Cheap/fast model for structured analysis (e.g., mistral-small)
 
@@ -40,7 +41,12 @@ EXPECTED_FIELDS = {
         "company", "industry", "sub_industry", "company_size", "tech_used",
         "funding_stage", "decision_makers", "pain_points", "budget_range",
     ],
+    "contact": [
+        "first_name", "last_name", "role", "country_of_origin",
+        "gender", "age", "linkedin_url", "twitter_url",
+    ],
     "empathy_map": [
+        "role", "country_of_origin", "gender", "age",
         "thinks", "feels", "says", "does", "pain_points", "gains",
         "goals", "influences", "preferred_channels",
     ],
@@ -59,7 +65,7 @@ class GapFinderAgent(BaseAgent):
 
         Input schema:
             {
-                "entity_type": "offer" | "profile" | "empathy_map",
+                "entity_type": "offer" | "profile" | "contact" | "empathy_map",
                 "entity": { ... },
                 "context": {
                     "low_score_dimensions": [str] | null,

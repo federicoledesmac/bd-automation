@@ -7,7 +7,8 @@ This directory contains all architecture and flow diagrams for the BD Automation
 | Diagram | Description | Scope |
 |---------|-------------|-------|
 | [pipeline-overview.md](pipeline-overview.md) | Full system architecture — all 4 layers and data flows | System-wide |
-| [data-model.md](data-model.md) | Entity-Relationship diagram for Supabase tables | Data Store |
+| [data-model.md](data-model.md) | Entity-Relationship diagram for Supabase tables (7 entities) | Data Store |
+| [agent-profiles-contacts.md](agent-profiles-contacts.md) | Profiles, Contacts, Empathy Maps — detailed relationships | Data Store |
 | [agent-filter.md](agent-filter.md) | Filter Agent internal flow (Stage 1) | Agent |
 | [agent-score.md](agent-score.md) | Score Agent internal flow (Stage 2) | Agent |
 | [agent-critic.md](agent-critic.md) | Critic Agent internal flow (Stage 3) | Agent |
@@ -19,7 +20,7 @@ This directory contains all architecture and flow diagrams for the BD Automation
 
 ### Option 1: Edit directly on GitHub (simplest)
 1. Navigate to the diagram file on GitHub
-2. Click the pencil (✏️) icon to edit
+2. Click the pencil icon to edit
 3. Modify the Mermaid code inside the ` ```mermaid ` block
 4. Preview renders automatically in GitHub
 5. Commit to a new branch and open a PR
@@ -53,5 +54,5 @@ This directory contains all architecture and flow diagrams for the BD Automation
 ## Naming Convention
 - `pipeline-*.md` — System-level diagrams
 - `data-*.md` — Data model diagrams
-- `agent-*.md` — Individual agent flow diagrams
+- `agent-*.md` — Individual agent flow diagrams and entity detail diagrams
 - `infra-*.md` — Infrastructure/deployment diagrams (future)
