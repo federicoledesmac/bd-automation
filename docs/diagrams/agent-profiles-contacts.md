@@ -1,23 +1,9 @@
-# BD Automation — Data Model
+# Profiles & Contacts — Data Model Detail
 
-> **Edit this diagram:** Open in [Mermaid Live Editor](https://mermaid.live) — paste the code below, edit visually, then copy back and submit a PR.
+> **Owner:** Ivor Jugo (external) / Rado Patus (internal) | **Contacts Owner:** Diego Torres
 
 ```mermaid
 erDiagram
-    OFFERS {
-        uuid id PK
-        string title
-        string[] services
-        string[] verticals
-        string[] tech_stack
-        string pricing_model
-        jsonb case_studies
-        jsonb team_capabilities
-        string delivery_timeline
-        timestamp created_at
-        timestamp updated_at
-    }
-
     PROFILES {
         uuid id PK
         string company
@@ -77,39 +63,48 @@ erDiagram
         string description
         float strength
         timestamp detected_at
-        jsonb raw_data
     }
 
     MATCH_RESULTS {
         uuid id PK
         uuid offer_id FK
         uuid profile_id FK
-        boolean filter_pass
-        jsonb scores
         float composite_score
         string critic_verdict
-        float quality_score
-        jsonb outreach_variants
-        string recommended_channel
-        string status
-        timestamp created_at
     }
 
-    FEEDBACK {
-        uuid id PK
-        uuid match_id FK
-        int sales_rating
-        string outcome
-        string outreach_channel
-        int days_to_response
-        text sales_notes
-        timestamp created_at
-    }
-
-    OFFERS ||--o{ MATCH_RESULTS : "matched with"
-    PROFILES ||--o{ MATCH_RESULTS : "matched with"
     PROFILES ||--o{ CONTACTS : "has team members"
-    PROFILES ||--o| EMPATHY_MAPS : "has"
+    PROFILES ||--o| EMPATHY_MAPS : "has persona"
     PROFILES ||--o{ SIGNALS : "emits"
-    MATCH_RESULTS ||--o| FEEDBACK : "receives"
+    PROFILES ||--o{ MATCH_RESULTS : "matched in"
 ```
+
+## Contacts
+
+People within each company profile. Used by the Writer Agent to personalize outreach to specific decision makers.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | uuid (PK) | Contact identifier |
+| `profile_id` | uuid (FK) | Parent company profile |
+| `first_name` | string | First name |
+| `last_name` | string | Last name |
+| `role` | string | Job title / role in the company |
+| `country_of_origin` | string | Country of origin |
+| `gender` | string | Gender |
+| `age` | int | Age |
+| `linkedin_url` | string | LinkedIn profile URL |
+| `twitter_url` | string | Twitter/X profile URL |
+
+## Empathy Maps — Demographic Fields
+
+The empathy map now includes demographic context to improve personalization:
+
+| Field | Type | Purpose |
+|-------|------|---------|
+| `role` | string | Persona's role — affects tone and talking points |
+| `country_of_origin` | string | Cultural context for communication style |
+| `gender` | string | Inclusive language adaptation |
+| `age` | int | Generational communication preferences |
+
+These fields feed into the **Writer Agent** for channel selection and tone matching, and into the **Score Agent** for relationship proximity assessment.
